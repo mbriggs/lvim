@@ -77,10 +77,6 @@ lvim.builtin.which_key.mappings["e"] = {
 		r = { "<cmd>SudaRead<cr>", "Read file with sudo" },
 		w = { "<cmd>SudaWrite<cr>", "Write file with sudo" },
 	},
-	x = { "<cmd>NnnExplorer %:p:h<cr>", "Explore" },
-	X = { "<cmd>NnnExplorer<cr>", "Explore (from root)" },
-	p = { "<cmd>NnnPicker %:p:h<cr>", "Picker" },
-	P = { "<cmd>NnnPicker<cr>", "Picker (from root)" },
 	s = { "<cmd>Sort<cr>", "Sort" },
 	t = { ':s/"\\(\\w\\) \\(\\w\\)"/\\1", "\\2/g<cr>', "Split word string" },
 }

@@ -49,7 +49,7 @@ lvim.builtin.telescope.defaults.mappings = {
 
 -- which-key
 
-lvim.builtin.which_key.mappings[";"] = { [[<cmd>Telescope find_files<cr>]], "Find File" }
+lvim.builtin.which_key.mappings[";"] = { [[<cmd>lua require("lsp_fixcurrent")()<cr>]], "QuickFix" }
 lvim.builtin.which_key.mappings["<space>"] = { [[<cmd>Telescope oldfiles<cr>]], "Find Old File" }
 lvim.builtin.which_key.mappings["<cr>"] = { [[<cmd>q<cr>]], "Close Window" }
 lvim.builtin.which_key.mappings["-"] = { [[<cmd>only<cr>]], "Close other splits" }
@@ -431,8 +431,8 @@ vmap g<C-x> <Plug>(dial-decrement-additional)
 			function _G.tab_binding()
 				if require("cmp").visible() then
 					return replace_keycodes("<C-n>")
-				elseif vim.fn["vsnip#available"](1) ~= 0 then
-					return replace_keycodes("<Plug>(vsnip-expand-or-jump)")
+				elseif require("luasnip").expand_or_jumpable() then
+					return replace_keycodes("<Plug>(luasnip-expand-or-jump)")
 				else
 					return replace_keycodes("<Plug>(Tabout)")
 				end
@@ -441,8 +441,8 @@ vmap g<C-x> <Plug>(dial-decrement-additional)
 			function _G.s_tab_binding()
 				if require("cmp").visible() then
 					return replace_keycodes("<C-p>")
-				elseif vim.fn["vsnip#jumpable"](-1) ~= 0 then
-					return replace_keycodes("<Plug>(vsnip-jump-prev)")
+				elseif require("luasnip").jumpable(-1) then
+					return replace_keycodes("<Plug>(luasnip-jump-prev)")
 				else
 					return replace_keycodes("<Plug>(TaboutBack)")
 				end

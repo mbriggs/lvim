@@ -92,12 +92,13 @@ lvim.builtin.which_key.mappings["t"] = {
 
 lvim.builtin.which_key.mappings["x"] = {
 	name = "+Trouble",
-	f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-	w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Workspace Diagnostics" },
-	d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Document Diagnostics" },
-	r = { "<cmd>Trouble lsp_references<cr>", "References" },
-	q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-	l = { "<cmd>Trouble loclist<cr>", "Location List" },
+	x = { "<cmd>TroubleClose<cr>", "Close" },
+	f = { "<cmd>TroubleToggle definitions<cr>", "Definitions" },
+	w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace Diagnostics" },
+	d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics" },
+	r = { "<cmd>TroubleToggle references<cr>", "References" },
+	q = { "<cmd>TroubleToggle quickfix<cr>", "QuickFix" },
+	l = { "<cmd>TroubleToggle loclist<cr>", "Location List" },
 	t = { "<cmd>TodoTrouble<cr>", "TODOs" },
 }
 

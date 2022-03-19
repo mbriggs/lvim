@@ -11,6 +11,8 @@ lvim.keys.normal_mode["<CR>"] = ":nohlsearch<CR>:w<CR>"
 lvim.keys.normal_mode["<s-h>"] = "^"
 lvim.keys.normal_mode["<s-l>"] = "$"
 
+lvim.keys.normal_mode["\\"] = ":NvimTreeToggle<cr>"
+
 lvim.keys.normal_mode["<c-l>"] = ":BufferLineCycleNext<cr>"
 lvim.keys.normal_mode["<c-h>"] = ":BufferLineCyclePrev<cr>"
 -- tmux

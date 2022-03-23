@@ -2,6 +2,18 @@
 lvim.log.level = "warn"
 lvim.colorscheme = "onedark"
 
+vim.cmd([[
+if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+
+syntax on
+set termguicolors
+]])
+
+lvim.builtin.treesitter.indent.enable = false
+
 lvim.format_on_save = true
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
@@ -22,11 +34,11 @@ lvim.keys.normal_mode["<c-f>k"] = ":TmuxNavigateUp<cr>"
 lvim.keys.normal_mode["<c-f>l"] = ":TmuxNavigateRight<cr>"
 lvim.keys.normal_mode["<c-f><c-f>"] = ":TmuxNavigatePrevious<cr>"
 
-lvim.keys.term_mode["<c-f>h"] = [[<c-\><c-n>:TmuxNavigateLeft<cr>]]
-lvim.keys.term_mode["<c-f>j"] = [[<c-\><c-n>:TmuxNavigateDown<cr>]]
-lvim.keys.term_mode["<c-f>k"] = [[<c-\><c-n>:TmuxNavigateUp<cr>]]
-lvim.keys.term_mode["<c-f>l"] = [[<c-\><c-n>:TmuxNavigateRight<cr>]]
-lvim.keys.term_mode["<c-f><c-f>"] = [[<c-\><c-n>:TmuxNavigatePrevious<cr>]]
+lvim.keys.term_mode["<c-f>h"] = [[<c-a><c-n>:TmuxNavigateLeft<cr>]]
+lvim.keys.term_mode["<c-f>j"] = [[<c-a><c-n>:TmuxNavigateDown<cr>]]
+lvim.keys.term_mode["<c-f>k"] = [[<c-a><c-n>:TmuxNavigateUp<cr>]]
+lvim.keys.term_mode["<c-f>l"] = [[<c-a><c-n>:TmuxNavigateRight<cr>]]
+lvim.keys.term_mode["<c-f><c-f>"] = [[<c-a><c-n>:TmuxNavigatePrevious<cr>]]
 
 -- put current dir into command
 lvim.keys.command_mode["%%"] = "<C-R>=expand('%:h').'/'<cr>"
@@ -177,7 +189,9 @@ lvim.autocommands.custom_groups = {
 }
 
 lvim.plugins = {
-	{ "navarasu/onedark.nvim" },
+	{
+		"navarasu/onedark.nvim",
+	},
 
 	-- TMUX
 	{

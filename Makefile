@@ -7,8 +7,9 @@ dependencies:
 	brew install nnn
 	brew install --build-from-source mhanberg/zk/zk
 	brew install codespell
-	brew install shellfmt
-	brew install sqlformat
+	brew install shfmt
+	brew install sqlparse
+	brew install shellcheck
 	brew install stylua
 	brew install hadolint
 	pip3 install cmakelang

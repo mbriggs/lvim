@@ -380,6 +380,13 @@ vmap g<C-x> <Plug>(dial-decrement-additional)
 	"tpope/vim-surround",
 	"tpope/vim-unimpaired",
 
+	{
+		"ggandor/leap.nvim",
+		config = function()
+			require("leap").set_default_keymaps()
+		end,
+	},
+
 	"ray-x/cmp-treesitter",
 	{
 		"ruifm/gitlinker.nvim",

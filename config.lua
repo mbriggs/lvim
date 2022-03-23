@@ -12,6 +12,8 @@ syntax on
 set termguicolors
 ]])
 
+vim.opt.laststatus = 3
+
 lvim.builtin.treesitter.indent.enable = false
 
 lvim.format_on_save = true
@@ -28,17 +30,10 @@ lvim.keys.normal_mode["\\"] = ":NvimTreeToggle<cr>"
 lvim.keys.normal_mode["<c-l>"] = ":BufferLineCycleNext<cr>"
 lvim.keys.normal_mode["<c-h>"] = ":BufferLineCyclePrev<cr>"
 -- tmux
-lvim.keys.normal_mode["<c-f>h"] = ":TmuxNavigateLeft<cr>"
-lvim.keys.normal_mode["<c-f>j"] = ":TmuxNavigateDown<cr>"
-lvim.keys.normal_mode["<c-f>k"] = ":TmuxNavigateUp<cr>"
-lvim.keys.normal_mode["<c-f>l"] = ":TmuxNavigateRight<cr>"
-lvim.keys.normal_mode["<c-f><c-f>"] = ":TmuxNavigatePrevious<cr>"
-
-lvim.keys.term_mode["<c-f>h"] = [[<c-a><c-n>:TmuxNavigateLeft<cr>]]
-lvim.keys.term_mode["<c-f>j"] = [[<c-a><c-n>:TmuxNavigateDown<cr>]]
-lvim.keys.term_mode["<c-f>k"] = [[<c-a><c-n>:TmuxNavigateUp<cr>]]
-lvim.keys.term_mode["<c-f>l"] = [[<c-a><c-n>:TmuxNavigateRight<cr>]]
-lvim.keys.term_mode["<c-f><c-f>"] = [[<c-a><c-n>:TmuxNavigatePrevious<cr>]]
+lvim.keys.normal_mode["<c-w>h"] = ":TmuxNavigateLeft<cr>"
+lvim.keys.normal_mode["<c-w>j"] = ":TmuxNavigateDown<cr>"
+lvim.keys.normal_mode["<c-w>k"] = ":TmuxNavigateUp<cr>"
+lvim.keys.normal_mode["<c-w>l"] = ":TmuxNavigateRight<cr>"
 
 -- put current dir into command
 lvim.keys.command_mode["%%"] = "<C-R>=expand('%:h').'/'<cr>"

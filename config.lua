@@ -119,7 +119,6 @@ lvim.builtin.which_key.mappings["q"] = {
 	s = { "<cmd>:wa | qa!<cr>", "Quit and save" },
 }
 
-lvim.builtin.dashboard.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
@@ -156,7 +155,10 @@ lvim.builtin.treesitter.highlight.enabled = true
 local formatters = require("lvim.lsp.null-ls.formatters")
 
 formatters.setup({
-	{ command = "prettierd", filetypes = { "javascript", "typescript", "css", "scss", "html", "json" } },
+	{
+		command = "prettierd",
+		filetypes = { "javascript", "typescript", "typescriptreact", "css", "scss", "html", "json" },
+	},
 	{ command = "cmake_format", filetypes = { "make" } },
 	{ command = "rufo", filetypes = { "ruby" } },
 	{ command = "shfmt", filetypes = { "bash" } },
@@ -490,3 +492,41 @@ vmap g<C-x> <Plug>(dial-decrement-additional)
 		end,
 	},
 }
+
+-- Snippets
+
+local ls = require("luasnip")
+local s = ls.snippet
+local sn = ls.snippet_node
+local isn = ls.indent_snippet_node
+local t = ls.text_node
+local i = ls.insert_node
+local f = ls.function_node
+local c = ls.choice_node
+local d = ls.dynamic_node
+local r = ls.restore_node
+local events = require("luasnip.util.events")
+local ai = require("luasnip.nodes.absolute_indexer")
+
+ls.snippets = {
+	typescriptreact = {
+		s("icn", t([[import cn from "classnames";]])),
+		s(
+			"rcomp",
+			t([[interface ]]),
+			i(1, "Props"),
+			t([[ {}]], "", ""),
+			t([[export default function ]]),
+			i(2, "Component"),
+			t([[(props: ]]),
+			f(function(_, _, interface)
+				return interface
+			end, { 1 }),
+			t([[) {]], ""),
+			i(0),
+			t("}")
+		),
+	},
+}
+
+ls.filetype_extend("typescriptreact", { "typescript" })

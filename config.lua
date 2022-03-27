@@ -2,16 +2,6 @@
 lvim.log.level = "warn"
 lvim.colorscheme = "onedark"
 
-vim.cmd([[
-if !has('gui_running') && &term =~ '^\%(screen\|tmux\)'
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-
-syntax on
-set termguicolors
-]])
-
 lvim.builtin.treesitter.indent.enable = false
 
 lvim.format_on_save = true
@@ -27,6 +17,7 @@ lvim.keys.normal_mode["\\"] = ":NvimTreeToggle<cr>"
 
 lvim.keys.normal_mode["<c-l>"] = ":BufferLineCycleNext<cr>"
 lvim.keys.normal_mode["<c-h>"] = ":BufferLineCyclePrev<cr>"
+
 -- tmux
 lvim.keys.normal_mode["<c-w>h"] = ":TmuxNavigateLeft<cr>"
 lvim.keys.normal_mode["<c-w>j"] = ":TmuxNavigateDown<cr>"

@@ -36,6 +36,13 @@ lvim.keys.normal_mode["<c-w>l"] = ":TmuxNavigateRight<cr>"
 -- put current dir into command
 lvim.keys.command_mode["%%"] = "<C-R>=expand('%:h').'/'<cr>"
 
+-- Autocommands
+lvim.autocommands.custom_groups = {
+	{ "BufRead,BufNewFile", "*.gohtml", "set ft=html" },
+	{ "BufRead,BufNewFile", ".envrc*", "set ft=bash" },
+	{ "BufNewFile,BufRead", "*.go", "setlocal noet ts=4 sw=4 sts=4" },
+}
+
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
@@ -61,68 +68,7 @@ nvimtree.setup.update_focused_file.update_cwd = false
 local project = lvim.builtin.project
 project.manual_mode = true
 
--- which-key
-
-lvim.builtin.which_key.mappings[";"] = { [[<cmd>lua require("lsp_fixcurrent")()<cr>]], "QuickFix" }
-lvim.builtin.which_key.mappings["<space>"] = { [[<cmd>Telescope oldfiles<cr>]], "Find Old File" }
-lvim.builtin.which_key.mappings["<cr>"] = { [[<cmd>q<cr>]], "Close Window" }
-lvim.builtin.which_key.mappings["-"] = { [[<cmd>only<cr>]], "Close other splits" }
-lvim.builtin.which_key.mappings["'"] = { [[<cmd>vs<cr>]], "Split" }
-lvim.builtin.which_key.mappings[","] = { [[<cmd>sp<cr>]], "Horizontal Split" }
-lvim.builtin.which_key.mappings["."] = { [[<cmd>Telescope lsp_definitions<cr>]], "Go to Definition" }
-lvim.builtin.which_key.mappings[">"] = { [[<cmd>Telescope lsp_references<cr>]], "Go to other references" }
-
-lvim.builtin.which_key.mappings["b"]["d"] = { [[<cmd>BufDel<cr>]], "Delete Buffer" }
-lvim.builtin.which_key.mappings["b"]["k"] = { [[<cmd>BufDel!<cr>]], "Kill Buffer" }
-
-lvim.builtin.which_key.mappings["e"] = {
-	name = "+Editor",
-	e = { [[<cmd>NvimTreeToggle<cr>]] },
-	m = { [[<cmd>Telescope marks<cr>]], "Marks" },
-	h = { [[<cmd>Telescope help_tags<cr>]], "Help Tag" },
-	[";"] = { [[<cmd>Telescope commands<cr>]], "Commands" },
-	c = { [[<cmd>Telescope command_history<cr>]], "Previous Commands" },
-	k = { [[<cmd>Telescope keymaps<cr>]], "Keymap" },
-	q = { [[<cmd>Telescope quickfix<cr>]], "QuickFix" },
-	o = { [[<cmd>Telescope quickfix<cr>]], "Vim Options" },
-	w = { "<cmd>WinShift<cr>", "Move Window" },
-	u = {
-		name = "+Sudo",
-		r = { "<cmd>SudaRead<cr>", "Read file with sudo" },
-		w = { "<cmd>SudaWrite<cr>", "Write file with sudo" },
-	},
-	s = { "<cmd>Sort<cr>", "Sort" },
-	t = { ':s/"\\(\\w\\) \\(\\w\\)"/\\1", "\\2/g<cr>', "Split word string" },
-}
-
-lvim.builtin.which_key.mappings["t"] = {
-	name = "+Test",
-	t = { "<cmd>TestNearest<cr>", "Test Nearest" },
-	f = { "<cmd>TestFile<cr>", "Test File" },
-	a = { "<cmd>TestSuite<cr>", "Test Suite" },
-	[";"] = { "<cmd>TestLast<cr>", "Rerun Last Test" },
-	["."] = { "<cmd>TestVisit<cr>", "Visit Test" },
-}
-
-lvim.builtin.which_key.mappings["x"] = {
-	name = "+Trouble",
-	x = { "<cmd>TroubleClose<cr>", "Close" },
-	f = { "<cmd>TroubleToggle definitions<cr>", "Definitions" },
-	w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace Diagnostics" },
-	d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics" },
-	r = { "<cmd>TroubleToggle references<cr>", "References" },
-	q = { "<cmd>TroubleToggle quickfix<cr>", "QuickFix" },
-	l = { "<cmd>TroubleToggle loclist<cr>", "Location List" },
-	t = { "<cmd>TodoTrouble<cr>", "TODOs" },
-}
-
-lvim.builtin.which_key.mappings["q"] = {
-	name = "+Quit",
-	q = { "<cmd>:qa<cr>", "Quit" },
-	c = { "<cmd>:q!<cr>", "Close" },
-	k = { "<cmd>:qa!<cr>", "Quit without saving" },
-	s = { "<cmd>:wa | qa!<cr>", "Quit and save" },
-}
+lvim.builtin.which_key.mappings = vim.tbl_extend("force", lvim.builtin.which_key.mappings, require("mb.which_key"))
 
 lvim.builtin.dashboard.active = false
 lvim.builtin.notify.active = true
@@ -157,45 +103,10 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
 -- end
 
--- set formatters, this will override the language server formatting capabilities (if it exists)
-local formatters = require("lvim.lsp.null-ls.formatters")
+local null = require("mb.null_ls")
 
-formatters.setup({
-	{
-		command = "prettierd",
-		filetypes = { "javascript", "typescript", "typescriptreact", "css", "scss", "html", "json" },
-	},
-	{ command = "cmake_format", filetypes = { "make" } },
-	{ command = "rufo", filetypes = { "ruby" } },
-	{ command = "shfmt", filetypes = { "bash" } },
-	{ command = "sqlformat", filetypes = { "sql" } },
-	{ command = "stylua", filetypes = { "lua" } },
-})
-
--- set additional linters
-local linters = require("lvim.lsp.null-ls.linters")
-linters.setup({
-	{ command = "shellcheck" },
-	{ command = "codespell" },
-	{ command = "eslint_d" },
-	{ command = "hadolint" },
-	{ command = "proselint" },
-	{ command = "stylelint" },
-	{ command = "golangci_lint" },
-})
-
-local code_actions = require("lvim.lsp.null-ls.code_actions")
-code_actions.setup({
-	{ command = "eslint_d" },
-	{ command = "refactoring" },
-	{ command = "shellcheck" },
-})
-
--- Autocommands
-lvim.autocommands.custom_groups = {
-	{ "BufRead,BufNewFile", "*.gohtml", "set ft=html" },
-	{ "BufRead,BufNewFile", ".envrc*", "set ft=bash" },
-	{ "BufNewFile,BufRead", "*.go", "setlocal noet ts=4 sw=4 sts=4" },
-}
+require("lvim.lsp.null-ls.formatters").setup(null.formatters)
+require("lvim.lsp.null-ls.linters").setup(null.linters)
+require("lvim.lsp.null-ls.code_actions").setup(null.code_actions)
 
 lvim.plugins = require("mb.plugins")

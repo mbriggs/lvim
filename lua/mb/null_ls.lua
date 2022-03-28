@@ -10,6 +10,7 @@ return {
 		{ command = "sqlformat", filetypes = { "sql" } },
 		{ command = "stylua", filetypes = { "lua" } },
 	},
+
 	linters = {
 		{ command = "shellcheck" },
 		{ command = "codespell" },
@@ -19,6 +20,7 @@ return {
 		{ command = "stylelint" },
 		{ command = "golangci_lint" },
 	},
+
 	code_actions = {
 		{ command = "eslint_d" },
 		{ command = "refactoring" },
